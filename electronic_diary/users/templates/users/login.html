@@ -1,5 +1,5 @@
 {% extends 'users/base.html' %}
-{% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Авторизация
@@ -7,4 +7,12 @@
 
 {% block content %}
     <h1>Вход в систему</h1>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div>
+            {{ form|crispy }}
+            <button class="btn btn-secondary" type="submit">Войти</button>
+            <a href="{% url 'home' %}">Вернуться на главную!</a>
+        </div>
+    </form>
 {% endblock%}

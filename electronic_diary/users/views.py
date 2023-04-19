@@ -1,10 +1,12 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.template.context_processors import request
-from django.views import View
-
-from electronic_diary.users.forms import AuthUserForm
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.views.generic import View, CreateView
+
+from .forms import AuthUserForm, RegisterUserForm
+from .models import CustomerUser
 
 
 class HomeView(View):
@@ -14,7 +16,23 @@ class HomeView(View):
 
 
 class MyLoginView(LoginView):
-    template_name = 'login.html'
-    form_class = AuthUserForm
     redirect_authenticated_user = True
+    template_name = 'users/login.html'
+    form_class = AuthUserForm
+
+
+class RegisterUserView(CreateView):
+
+    model = User
+    template_name = 'users/register.html'
+    form_class = RegisterUserForm
+
+    # auto login after register
+    def form_valid(self, form):
+        form.save()
+        username = self.request.POST['username']
+        password = self.request.POST['password1']
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return HttpResponseRedirect('/')
 
