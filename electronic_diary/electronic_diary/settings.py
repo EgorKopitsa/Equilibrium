@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,21 @@ LOGOUT_REDIRECT_URL = '/'
 # User
 # https://www.youtube.com/watch?v=sjJV0Ru1q0U&t=603s
 AUTH_USER_MODEL = 'users.CustomerUser'
+
+# Registration with email
+# https://proghunter.ru/articles/django-base-2023-registration-with-email-address-verification-24
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'equilibrium.service.cgc@gmail.com'
+EMAIL_HOST_PASSWORD = 'ljjrlgblswnscraw'
+
+EMAIL_SERVER = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = ['kopitsaegor.01@gmail.com']
+
+# https://stackoverflow.com/questions/35388637/runtimeerror-model-class-django-contrib-sites-models-site-doesnt-declare-an-ex
+SITE_ID = 1

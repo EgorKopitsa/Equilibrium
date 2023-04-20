@@ -2,17 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Регистрация
+    {{ title }}
 {% endblock%}
 
 {% block content %}
-    <h1>Регистрация в системе</h1>
+
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
-        <div>
+        <div class="container">
+            <h1>Регистрация в системе</h1>
             {{ form|crispy }}
             <button class="btn btn-secondary" type="submit">Зарегистрироваться</button>
             <a href="{% url 'home' %}">Вернуться на главную!</a>
         </div>
     </form>
+
 {% endblock%}
