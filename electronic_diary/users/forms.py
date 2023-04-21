@@ -4,28 +4,42 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import CustomerUser
 
 
-class RegisterUserForm(UserCreationForm):
+class UserRegisterForm(UserCreationForm):
 
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
-    email = forms.EmailField(label="Электронная почта", max_length=254, widget=forms.EmailInput(attrs={"placeholder": "Электронная почта"}))
-    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
-    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}))
-    middle_name = forms.CharField(label='Отчество', widget=forms.TextInput(attrs={'placeholder': 'Отчество'}))
-    gender = forms.CharField(label='Пол', max_length=1, widget=forms.TextInput(attrs={'placeholder': 'Пол'}))
-    birth_date = forms.DateField(label='Дата рождения', widget=forms.TextInput(attrs={'placeholder': 'Дата рождения'}))
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
-    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
-
-    class Meta:
+    class Meta(UserCreationForm):
         model = CustomerUser
-        fields = ('first_name', 'last_name', 'middle_name', 'username', 'email','gender', 'birth_date')
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'middle_name', 'username', 'email', 'gender', 'birth_date')
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields['username'].widget.attrs.update({'placeholder': 'Логин'})
+            self.fields['email'].widget.attrs.update({"placeholder": "Электронная почта"})
+            self.fields['first_name'].widget.attrs.update({'placeholder': 'Имя'})
+            self.fields['last_name'].widget.attrs.update({'placeholder': 'Фамилия'})
+            self.fields['middle_name'].widget.attrs.update({'placeholder': 'Отчество'})
+            self.fields['gender'].widget.attrs.update({'placeholder': 'Пол'})
+            self.fields['birth_date'].widget.attrs.update({'placeholder': 'Дата рождения'})
+            self.fields['password1'].widget.attrs.update({"placeholder": 'Придумайте свой пароль'})
+            self.fields['password2'].widget.attrs.update({"placeholder": 'Повторите придуманный пароль'})
+            self.fields[field].widget.attrs.update({"class": "form-control", "autocomplete": "off"})
 
 
 class AuthUserForm(AuthenticationForm):
 
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
-
     class Meta:
         model = CustomerUser
         fields = ('username', 'password')
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields['username'].widget.attrs['placeholder'] = 'Логин пользователя'
+            self.fields['password'].widget.attrs['placeholder'] = 'Пароль пользователя'
+            self.fields['username'].label = 'Логин'
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })

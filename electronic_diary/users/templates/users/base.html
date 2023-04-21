@@ -11,8 +11,9 @@
 </head>
 <body>
     {% if request.user.is_authenticated %}
-        <h1>Ты {{ user.first_name }} тут</h1>
-        <a href="{% url 'logout' %}" >Выйти</a>
+        <h1>{{ user.username }}</h1>
+        <a href="{% url 'user_detail' user.pk %}">Профиль</a>
+        <a href="{% url 'logout' %}">Выйти</a>
     {% else %}
         <a href="{% url 'login' %}">Авторизация</a>
         <a href="{% url 'register' %}">Регистрация</a>

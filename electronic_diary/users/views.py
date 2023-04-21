@@ -1,9 +1,9 @@
 from django.contrib.auth import login, get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.views.generic import View, CreateView, TemplateView
+from django.views.generic import View, CreateView, TemplateView, DetailView
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
@@ -11,25 +11,36 @@ from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 
-
-from .forms import AuthUserForm, RegisterUserForm
-
-
-class HomeView(View):
-    def get(self, request, *args, **kwargs):
-        context = {}
-        return render(request, 'users/home.html', context)
+from .models import CustomerUser
+from .forms import AuthUserForm, UserRegisterForm
 
 
-class MyLoginView(LoginView):
+class HomeView(TemplateView):
+
+    template_name = 'users/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
+
+
+class UserLoginView(LoginView):
+
     redirect_authenticated_user = True
     template_name = 'users/login.html'
     form_class = AuthUserForm
+    next_page = '/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Авторизация'
+        return context
 
 
-class RegisterUserView(CreateView):
+class UserRegisterView(CreateView):
 
-    form_class = RegisterUserForm
+    form_class = UserRegisterForm
     success_url = reverse_lazy('/')
     template_name = 'users/registration/user_register.html'
 
@@ -54,6 +65,10 @@ class RegisterUserView(CreateView):
             fail_silently=False,
         )
         return redirect('email_confirmation_sent')
+
+
+class UserLogoutView(LogoutView):
+    next_page = '/'
 
 
 class UserConfirmEmailView(View):
@@ -97,4 +112,15 @@ class EmailConfirmationFailedView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Ваш электронный адрес не активирован'
+        return context
+
+
+class UserDetailView(DetailView):
+
+    model = CustomerUser
+    template_name = 'users/user_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Страница пользователя: {self.object.username}'
         return context

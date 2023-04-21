@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fm)!u6+0%w=p^&x@mrp1yr2mksj7zzzkcz=j9+pn&w@jv-p=)_'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -136,8 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'  # stile crispy forms
 # End django-crispy-forms
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
 
 # User
 # https://www.youtube.com/watch?v=sjJV0Ru1q0U&t=603s
@@ -145,18 +143,7 @@ AUTH_USER_MODEL = 'users.CustomerUser'
 
 # Registration with email
 # https://proghunter.ru/articles/django-base-2023-registration-with-email-address-verification-24
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = 'equilibrium.service.cgc@gmail.com'
-EMAIL_HOST_PASSWORD = 'ljjrlgblswnscraw'
-
-EMAIL_SERVER = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = ['kopitsaegor.01@gmail.com']
 
 # https://stackoverflow.com/questions/35388637/runtimeerror-model-class-django-contrib-sites-models-site-doesnt-declare-an-ex
 SITE_ID = 1
