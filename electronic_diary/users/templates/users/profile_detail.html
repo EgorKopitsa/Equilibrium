@@ -1,0 +1,36 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+
+
+    <div class="container-fluid">
+        <div class="row row-flex">
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <figure>
+                    <img src="{{ user.avatar.url }}" class="img-fluid" alt="Фотография не найдена">
+                </figure>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <h4>{{ user.username }}</h4>
+                <ul>
+                    <li>Имя: {{ user.first_name }}</li>
+                    <li>Фамилия: {{ user.last_name }}</li>
+                    <li>Отчество: {{ user.middle_name }}</li>
+                    <li>Email: {{ user.email }}</li>
+                    <li>Пол: {{ user.gender }}</li>
+                    <li>Дата рождения: {{ user.birth_date }}</li>
+                </ul>
+
+                <a href="{% url 'profile_edit' %}" class="btn btn-primary">Редактировать профиль</a>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

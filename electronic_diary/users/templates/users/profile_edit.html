@@ -1,0 +1,19 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+
+   <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="container">
+         <h1>Изменение профиля</h1>
+         {{ form.as_p }}
+         <a href="{% url 'password_change' %}" class="btn btn-danger" role="button" aria-pressed="true">Изменить пароль</a>
+         <button type="submit" class="btn btn-primary">Подтвердить изменение профиля</button>
+      </div>
+   </form>
+
+{% endblock %}

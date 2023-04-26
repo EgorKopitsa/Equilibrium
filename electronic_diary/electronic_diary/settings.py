@@ -35,13 +35,13 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'crispy_forms',
     'crispy_bootstrap5',
-    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -110,25 +110,24 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
+# Static and Media files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'users/static'),
-]
+STATIC_ROOT = (BASE_DIR / 'static')
+
+STATICFILES_DIRS = [BASE_DIR / 'users/templates/src']
+
+MEDIA_ROOT = (BASE_DIR / 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # django-crispy-forms
@@ -143,7 +142,6 @@ AUTH_USER_MODEL = 'users.CustomerUser'
 
 # Registration with email
 # https://proghunter.ru/articles/django-base-2023-registration-with-email-address-verification-24
-
 
 # https://stackoverflow.com/questions/35388637/runtimeerror-model-class-django-contrib-sites-models-site-doesnt-declare-an-ex
 SITE_ID = 1

@@ -12,5 +12,9 @@ urlpatterns = [
     path('email-confirmation-sent/', EmailConfirmationSentView.as_view(), name='email_confirmation_sent'),
     path('email-confirmed/', EmailConfirmedView.as_view(), name='email_confirmed'),
     path('confirm-email-failed/', EmailConfirmationFailedView.as_view(), name='email_confirmation_failed'),
-    path('user-detail/<int:pk>/', UserDetailView.as_view(), name='user_detail')
+    path('profile/detail/<int:pk>/', UserDetailView.as_view(), name='profile_detail'),
+    path('profile/edit/', UserUpdateView.as_view(), name='profile_edit'),
+    path('password-change/', UserPasswordChangeView.as_view(), name='password_change'),
+    path('password-reset/', UserForgotPasswordView.as_view(), name='password_reset'),
+    path('set-new-password/<uidb64>/<token>/', UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]
